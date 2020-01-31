@@ -122,7 +122,7 @@ namespace PetGrooming.Controllers
         {
             //need information about a particular pet
             Pet selectedpet = db.Pets.SqlQuery("select * from pets where petid = @id", new SqlParameter("@id", id)).FirstOrDefault();
-            List<Species> species = db.Species.SqlQuery("sledct * from species").ToList();
+            List<Species> species = db.Species.SqlQuery("select * from species").ToList();
 
             UpdatePet viewmodel = new UpdatePet();
             viewmodel.pet = selectedpet;
@@ -131,27 +131,37 @@ namespace PetGrooming.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(string PetName, string PetColor, double PetWeight)
+        public ActionResult Update(string PetName, string PetColor, double PetWeight, int SpeciesID,string PetNotes, int id)
         {
 
             //Debug.WriteLine("I am trying to edit a pet's name to " + PetName + " and change the weight to " + PetWeight.ToString());
 
             //logic for updating the pet in the database goes here
-            string query = "insert into pets (PetName, Weight, color, SpeciesID, Notes) values (@PetName,@PetWeight,@PetColor,@SpeciesID,@PetNotes)";
-            SqlParameter[] sqlparams = new SqlParameter[5]; //0,1,2,3,4 pieces of information to add
+            string query = "update pets set PetName=@PetName, Weight=@PetWeight, color=@PetColor, Notes=@PetNotes, SpeciesID=@SpeciesID where petid=@id"; 
+            SqlParameter[] sqlparams = new SqlParameter[6]; //0,1,2,3,4 pieces of information to add
             //each piece of information is a key and value pair
             sqlparams[0] = new SqlParameter("@PetName", PetName);
             sqlparams[1] = new SqlParameter("@PetWeight", PetWeight);
             sqlparams[2] = new SqlParameter("@PetColor", PetColor);
             sqlparams[3] = new SqlParameter("@SpeciesID", SpeciesID);
-            sqlparams[4] = new SqlParameter("@PetNotes", Notes);
+            sqlparams[4] = new SqlParameter("@PetNotes", PetNotes);
+            sqlparams[5] = new SqlParameter("@id", id);
 
             //db.Database.ExecuteSqlCommand will run insert, update, delete statements
             //db.Pets.SqlCommand will run a select statement, for example.
             db.Database.ExecuteSqlCommand(query, sqlparams);
             return RedirectToAction("List");
-        } 
+        }
+        public ActionResult Delete(int id)
+        {
 
+            string query = "delete from pets where petid=@id";
+            SqlParameter sqlparam = new SqlParameter("@id", id);
+
+            db.Database.ExecuteSqlCommand(query, sqlparam);
+
+            return RedirectToAction("list");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
