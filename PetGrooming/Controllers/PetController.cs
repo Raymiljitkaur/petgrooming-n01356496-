@@ -55,6 +55,7 @@ namespace PetGrooming.Controllers
         public ActionResult Show(int? id)
         {
             if (id == null)
+
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
