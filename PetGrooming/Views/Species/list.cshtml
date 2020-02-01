@@ -12,12 +12,17 @@
 
     foreach (var species in @Model)
     {
-     <div>
-
+        <div>
           <a href="/species/Show/@species.SpeciesID">@species.Name</a>
           <a href="/species/Delete/@species.SpeciesID">DELETE</a>
-    </div>
-       
-      
+          <a href="/species/Update/ @species.SpeciesID ">UPDATE</a>
+
+       </div>
+        }
+
+
+
+
     }
-}
+
+

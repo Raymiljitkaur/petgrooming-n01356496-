@@ -220,7 +220,6 @@
     <Content Include="Views\Species\Add.cshtml" />
     <Content Include="Views\Species\Show.cshtml" />
     <Content Include="Views\Species\update.cshtml" />
-    <Content Include="Views\Species\delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
