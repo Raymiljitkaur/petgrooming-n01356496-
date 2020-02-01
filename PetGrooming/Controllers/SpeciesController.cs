@@ -22,13 +22,14 @@ namespace PetGrooming.Controllers
         {
             return View();
         }
+        //this is to get a list of species
         public ActionResult List()
         {
            List<Species> myspecies= db.Species.SqlQuery("select* from species").ToList();
             return View(myspecies);
         }
 
-
+        //to add new species
         [HttpPost]
         public ActionResult Add(string speciesName)
         {
@@ -50,7 +51,7 @@ namespace PetGrooming.Controllers
         }
 
 
-
+        // to show specific species and to read the details
         public ActionResult Show(int? id)
         {
             if (id == null)
@@ -64,7 +65,7 @@ namespace PetGrooming.Controllers
             }
             return View(species);
         }
-
+        // to delete species.
         public ActionResult Delete(int id)
         {
 
@@ -76,7 +77,7 @@ namespace PetGrooming.Controllers
             return RedirectToAction("list");
         }
 
-
+        // to update the species.
         public ActionResult Update(int id)
         {
             string query = "select * from species where speciesid=@id";
